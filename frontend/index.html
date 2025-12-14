@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SafeClinic Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <div class="logo">SC</div>
+      <div>
+        <h1>SafeClinic Web</h1>
+        <p>Atención digital + Seguridad por diseño</p>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#especialidades">Especialidades</a>
+      <a href="#reservas">Reservas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="right">
+      <div class="pill" id="statusPill">● Estado: desconectado</div>
+      <button class="btn primary" id="btnReservarTop">Reservar cita</button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="grid">
+    <!-- HERO -->
+    <section class="card hero">
+      <div class="heroTop">
+        <h2>Hospital Digital, Confiable y Seguro</h2>
+        <p>
+          SafeClinic Web es una plataforma para reservas y atención digital, diseñada para ISO 27001/27005
+          con controles de seguridad reales (RBAC, JWT, auditoría y continuidad).
+        </p>
+
+        <div class="heroActions">
+          <button class="btn primary" id="btnReservarHero">Reservar cita</button>
+          <button class="btn" id="btnHealth">Probar conexión</button>
+        </div>
+      </div>
+
+      <div class="heroImg" aria-label="Hospital">
+        <div class="heroOverlay"></div>
+        <div class="heroText">
+          <b>Atención clínica moderna</b>
+          <div>Acceso por roles, mínimos privilegios y políticas aplicadas.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: RESERVA + PANEL -->
+    <aside class="card" id="reservas">
+      <label>Fecha y hora</label>
+      <input id="scheduledAt" type="datetime-local" />
+
+      <label>Motivo (opcional)</label>
+      <input id="reason" placeholder="Ej: Dolor de cabeza hace 3 días" />
+
+      <div class="tabs">
+        <div class="tab active" id="tabReservar">Reservar</div>
+        <div class="tab" id="tabPanel">Panel</div>
+      </div>
+
+      <!-- RESERVA (pública) -->
+      <div id="reservaView">
+        <div class="sectionTitle">
+          <h3>Reservas online</h3>
+          <span>elige y continúa</span>
+        </div>
+
+        <label>Especialidad</label>
+        <select id="specialty">
+          <option value="medicina">Medicina General</option>
+          <option value="cardio">Cardiología</option>
+          <option value="derma">Dermatología</option>
+          <option value="psico">Psicología</option>
+          <option value="pedi">Pediatría</option>
+        </select>
+
+        <label>Modalidad</label>
+        <select id="mode">
+          <option value="VIRTUAL">Teleconsulta (Virtual)</option>
+          <option value="PRESENCIAL">Presencial</option>
+        </select>
+
+        <div class="row">
+          <button class="btn primary" id="btnContinuar">Continuar</button>
+          <span class="muted">Al continuar, te pediremos iniciar sesión.</span>
+        </div>
+
+        <div class="sectionTitle" style="margin-top:14px" id="especialidades">
+          <h3>Especialidades destacadas</h3>
+          <span>demo</span>
+        </div>
+
+        <div class="cards">
+          <div class="mini">
+            <b>Medicina General</b>
+            <p>Atención primaria, triage y derivación segura.</p>
+          </div>
+          <div class="mini">
+            <b>Cardiología</b>
+            <p>Control y seguimiento con historial clínico.</p>
+          </div>
+          <div class="mini">
+            <b>Psicología</b>
+            <p>Teleconsulta con confidencialidad reforzada.</p>
+          </div>
+          <div class="mini">
+            <b>Pediatría</b>
+            <p>Agenda y seguimiento para pacientes menores.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL -->
+      <div id="panelView" class="hidden">
+        <div class="sectionTitle">
+          <h3>Acceso seguro</h3>
+          <span id="sessionHint">—</span>
+        </div>
+
+        <!-- AUTH -->
+        <div id="authBlock">
+          <label>Usuario</label>
+          <input id="username" placeholder="medico1 o paciente1" autocomplete="username"/>
+
+          <label>Contraseña</label>
+          <div class="pwWrap">
+            <input id="password" placeholder="safe1234" type="password" autocomplete="current-password"/>
+            <button class="pwBtn" id="btnTogglePw" type="button">👁</button>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnLogin">Ingresar</button>
+            <button class="btn" id="btnDemoFill">Usar demo</button>
+          </div>
+
+          <p class="muted" style="margin:10px 0 0">
+            Demo: <b>medico1</b> / <b>paciente1</b> (password: <b>safe1234</b>)
+          </p>
+        </div>
+
+        <!-- DASH -->
+        <div id="dashBlock" class="hidden">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="muted">Sesión activa</div>
+              <div id="whoami" style="font-weight:900">—</div>
+            </div>
+            <button class="btn" id="btnLogout">Salir</button>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnPatients">Pacientes</button>
+            <button class="btn primary" id="btnConsults">Consultas / Citas</button>
+          </div>
+
+          <div class="muted" id="accessHint" style="margin-top:10px">—</div>
+
+          <div class="list" id="cardsOut" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="contacto">
+    <p><b>SafeClinic Web</b> — Demo para proyecto final (ISO 27001/27005). En producción: TLS, WAF, MFA, SIEM y backups multi-región.</p>
+  </footer>
+</main>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
